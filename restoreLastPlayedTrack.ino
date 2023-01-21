@@ -15,17 +15,10 @@ void restoreLastPlayedTrack() {
   playTrack = EETrack;
   playFolder = EEFolder;
 
-  itoa(playTrack, lastPlayedTrack, 10);
-  itoa(playFolder, lastPlayedFolder, 10);
-
   if (DEBUG) {
     Serial.print("last played folder(int): ");
     Serial.println(playFolder);
     Serial.print("last played track(int): ");
     Serial.println(playTrack);
-    Serial.print("last played folder(char): ");
-    Serial.println(lastPlayedFolder);
-    Serial.print("last played track(char): ");
-    Serial.println(lastPlayedTrack);
   }
 }

@@ -13,10 +13,6 @@ void evaluateKey(char pressedKey) {
     Serial.println(playFolder);
     Serial.print("last played track(int): ");
     Serial.println(playTrack);
-    Serial.print("Last Folder: ");
-    Serial.println(lastPlayedFolder);
-    Serial.print(" Last Song: ");
-    Serial.println(lastPlayedTrack);
   }
 
   if (pressedKey == '1' || pressedKey == '2' || pressedKey == '3' || pressedKey == '4' || pressedKey == '5' || pressedKey == '6' || pressedKey == '7' || pressedKey == '8' || pressedKey == '9') {
@@ -24,8 +20,6 @@ void evaluateKey(char pressedKey) {
 
     playTrack = 1;
     playFolder = pressedKey - '0';
-    itoa(playTrack, lastPlayedTrack, 10);
-    itoa(playFolder, lastPlayedFolder, 10);
 
     if (DEBUG==2) {
       Serial.print("Pressed Key 1-9:  next folder(int): ");
@@ -42,9 +36,8 @@ void evaluateKey(char pressedKey) {
     } else {
       playTrack = 1;
     }
+
     playFolder = playFolder;
-    itoa(playTrack, lastPlayedTrack, 10);
-    itoa(playFolder, lastPlayedFolder, 10);
 
     if (DEBUG==2) {
       Serial.print("Pressed Key F:  next folder(int): ");
@@ -73,8 +66,6 @@ void evaluateKey(char pressedKey) {
       playFolder = playFolder;
       lastReverseKeypressedTime = millis();
     }
-    itoa(playTrack, lastPlayedTrack, 10);
-    itoa(playFolder, lastPlayedFolder, 10);
 
     if (DEBUG == 2) {
       Serial.print("Pressed Key R:  nextfolder(int): ");
@@ -115,8 +106,6 @@ void evaluateKey(char pressedKey) {
       Serial.println("Unknown Key");
       playTrack = 1;
       playFolder = 1;
-      itoa(playTrack, lastPlayedTrack, 10);
-      itoa(playFolder, lastPlayedFolder, 10);
     }
   }
 
@@ -125,10 +114,5 @@ void evaluateKey(char pressedKey) {
     Serial.println(playFolder);
     Serial.print("next track(int): ");
     Serial.println(playTrack);
-    Serial.print("Next Folder char: ");
-    Serial.println(lastPlayedFolder);
-    Serial.print(" Next Song char: ");
-    Serial.println(lastPlayedTrack);
-    Serial.println("");
   }
 }

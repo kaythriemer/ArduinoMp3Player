@@ -9,13 +9,7 @@ void playActualTrack() {
     Serial.println("PlayActualTrack");
   }
 
-  // ermittle Filename aus playlist.m3u für playFolder und playTrack und starte damit Player
-  // open the playlistfile for reading:
-  if (DEBUG) {
-    Serial.print("PlayActualTrack from Folder: ");
-    Serial.println(lastPlayedFolder[0]);
-  }
-  sprintf(playListFilePath, "/%c/%s", lastPlayedFolder[0], "playlist.m3u");
+  sprintf(playListFilePath, "/%i/%s", playFolder, "playlist.m3u");
   if (DEBUG) {
     Serial.print("Reading playlist from: ");
     Serial.println(playListFilePath);
@@ -27,7 +21,6 @@ void playActualTrack() {
     // read from the file until playTrack number is reached:
     // if playTrack Number greater than lines i playlist, last line will be used
     while (playlistfile.available() and i <= playTrack) {
-
 
       playTrackString = playlistfile.readStringUntil('\n');
       if (DEBUG) {
@@ -54,7 +47,7 @@ void playActualTrack() {
 
 
   // build filename
-  sprintf(actualMusicFileFullPath, "/%c/%s", lastPlayedFolder[0], playTrackString.c_str());
+  sprintf(actualMusicFileFullPath, "/%i/%s", playFolder, playTrackString.c_str());
   if (DEBUG) {
     Serial.print("Created full Filepath: ");
     Serial.println(actualMusicFileFullPath);
@@ -73,4 +66,5 @@ void playActualTrack() {
 
   // write playFolder and playTrack into lastplayedtrackfile
   saveLastPlayedTrack(playFolder, playTrack);
+  
 }

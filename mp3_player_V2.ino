@@ -55,10 +55,6 @@ const long pauseBetween2Tracks = 1000;
 //
 int playTrack;
 int playFolder;
-char lastPlayedTrack[5];
-char lastPlayedFolder[2];
-
-
 
 void setup() {
   Serial.begin(115200);
