@@ -1,7 +1,7 @@
-size_t arrayLength = 128;
-char fileName[128];
+size_t arrayLength = 256;
+char fileName[256];
 int numberOfLinesInOldPlaylist = 0;
-char playListFilePath[128];
+char playListFilePath[256];
 String playTrackString;
 #define PLAYLIST_FILE_NAME "/playlist.m3u"
 #define PLAYLIST_UNSORTED "/playlist_unsorted.m3u"
@@ -11,7 +11,7 @@ void createSortedPlaylist(int dirNameInt) {  // Open directory
     Serial.println("Create Sorted Playlist");
   }
 
-  char playlistFiles[128];
+  char playlistFiles[256];
   char completePath[3] = "/";
 
   char dirName = dirNameInt + '0';
@@ -120,7 +120,7 @@ void createSortedPlaylist(int dirNameInt) {  // Open directory
     // close the file:
     if (!playlistfile.close()) {
       if (DEBUG) {
-        Serial.println("playlist.close failed in playActualTrack");
+        Serial.println("playlist.close failed in createSortedPlaylist");
       }
     }
   } else {
@@ -143,7 +143,7 @@ void createSortedPlaylist(int dirNameInt) {  // Open directory
     }
 
     sprintf(playListFilePath, "/%c/%s", dirName, PLAYLIST_UNSORTED);
-    if (!playlistfile.open(playListFilePath, O_WRONLY | O_CREAT)) {
+    if (!playlistfile.open(playListFilePath, O_WRITE | O_CREAT)) {
       if (DEBUG) {
         Serial.println("open unsorted playlist failed");
       }
@@ -153,7 +153,16 @@ void createSortedPlaylist(int dirNameInt) {  // Open directory
       Serial.print("renaming unsorted playlist to: ");
       Serial.println(playListFilePath);
     }
-    playlistfile.rename(playListFilePath);
+    if (!SD.remove(playListFilePath)) {
+      if (DEBUG) {
+        Serial.println("Error deleting Playlist File");
+      }
+    };
+    if (!playlistfile.rename(playListFilePath)) {
+      if (DEBUG) {
+        Serial.println("Error renaming Playlist File");
+      }
+    };
     playlistfile.close();
 
     sortLines(completePath);
@@ -166,7 +175,7 @@ void createSortedPlaylist(int dirNameInt) {  // Open directory
 }
 
 File openTempAndListFile(char* dirName) {
-  char fileName[128];
+  char fileName[256];
 
   //create sorted entries temp filelistfile
   File tempFile;
@@ -193,7 +202,7 @@ File openTempAndListFile(char* dirName) {
 
 void deleteplaylistFilesRenameTemp(char* dirName, File tempFile) {
   playlistfile.close();
-  char fileName[128];
+  char fileName[256];
   strcpy(fileName, dirName);
   strcat(fileName, PLAYLIST_FILE_NAME);
   SD.remove(fileName);

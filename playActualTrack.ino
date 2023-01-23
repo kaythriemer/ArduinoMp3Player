@@ -1,7 +1,7 @@
 void playActualTrack() {
   int i = 1;
-  char playListFilePath[128];
-  char actualMusicFileFullPath[128];
+  char playListFilePath[256];
+  char actualMusicFileFullPath[256];
   String playTrackString;
 
 
@@ -15,6 +15,15 @@ void playActualTrack() {
     Serial.println(playListFilePath);
   }
   playlistfile = SD.open(playListFilePath, O_RDONLY);
+
+while (!playlistfile) {
+    playlistfile = SD.open(playListFilePath, O_RDONLY);
+    
+    // if the file didn't open, print an error:
+    Serial.println("############### ######################################################");
+    Serial.println("############### error opening Playlist File, will retry ##############");
+    Serial.println("############### ######################################################");  
+}
 
 
   if (playlistfile) {
@@ -39,12 +48,7 @@ void playActualTrack() {
         Serial.println("playlist.close failed in playActualTrack");
       }
     }
-  } else {
-    // if the file didn't open, print an error:
-    Serial.println("error opening Playlist File, will retry");
-    playActualTrack();
-  }
-
+  } 
 
   // build filename
   sprintf(actualMusicFileFullPath, "/%i/%s", playFolder, playTrackString.c_str());
@@ -53,18 +57,18 @@ void playActualTrack() {
     Serial.println(actualMusicFileFullPath);
   }
 
-  if (!SD.exists(actualMusicFileFullPath)) {
+  while (!SD.exists(actualMusicFileFullPath)) {
     if (DEBUG) {
-      Serial.println("Retry to read Playlistfile ");
-      playActualTrack();
+      Serial.println("################  Retry find Music file #############");
+      
     }
   }
 
-  musicPlayer.stopPlaying();
+  
 
   musicPlayer.startPlayingFile(actualMusicFileFullPath);
 
   // write playFolder and playTrack into lastplayedtrackfile
   saveLastPlayedTrack(playFolder, playTrack);
-  
+  delay (1000);
 }

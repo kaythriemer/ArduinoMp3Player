@@ -8,7 +8,7 @@ void evaluateKey(char pressedKey) {
     Serial.println(pressedKey);
   }
 
-  if (DEBUG==2) {
+  if (DEBUG == 2) {
     Serial.print("Start: last played folder(int): ");
     Serial.println(playFolder);
     Serial.print("last played track(int): ");
@@ -17,18 +17,19 @@ void evaluateKey(char pressedKey) {
 
   if (pressedKey == '1' || pressedKey == '2' || pressedKey == '3' || pressedKey == '4' || pressedKey == '5' || pressedKey == '6' || pressedKey == '7' || pressedKey == '8' || pressedKey == '9') {
 
-
+    musicPlayer.stopPlaying();
     playTrack = 1;
     playFolder = pressedKey - '0';
 
-    if (DEBUG==2) {
+    if (DEBUG == 2) {
       Serial.print("Pressed Key 1-9:  next folder(int): ");
       Serial.println(playFolder);
       Serial.print("next track(int): ");
       Serial.println(playTrack);
-    }    
+    }
     playActualTrack();
   } else if (pressedKey == 'F') {
+    musicPlayer.stopPlaying();    
 
     // Forward
     if (playTrack < maxTrackCount[playFolder]) {  // wenn bereits beim letzten Lied im Folder wird beim ersten Lied angefangen
@@ -39,7 +40,7 @@ void evaluateKey(char pressedKey) {
 
     playFolder = playFolder;
 
-    if (DEBUG==2) {
+    if (DEBUG == 2) {
       Serial.print("Pressed Key F:  next folder(int): ");
       Serial.println(playFolder);
       Serial.print("nexttrack(int): ");
@@ -49,6 +50,7 @@ void evaluateKey(char pressedKey) {
     }
     playActualTrack();
   } else if (pressedKey == 'R') {
+    musicPlayer.stopPlaying();
 
     // Back
     // erstes mal Reverse

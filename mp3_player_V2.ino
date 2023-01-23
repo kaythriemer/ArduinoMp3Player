@@ -95,14 +95,16 @@ void loop() {
   // wenn aktuelles lied zu Ende nach pauseBetween2Tracks -> nächstes starten mit Track +1 mit F-Logik
 
   if (musicPlayer.stopped()) {
-    if (millis() - lastMusicPlayerStopTime > pauseBetween2Tracks) {
+    if (lastMusicPlayerStopTime == 0) {
+      lastMusicPlayerStopTime = millis();
+    } else if (millis() - lastMusicPlayerStopTime > pauseBetween2Tracks) {
       lastMusicPlayerStopTime = 0;
       if (DEBUG) {
-        Serial.println("############# Play next track automatically.");
+        Serial.println("############# Play next track automatically.  #################");
       }
       evaluateKey('F');
-    } else if (lastMusicPlayerStopTime == 0) {
-      lastMusicPlayerStopTime = millis();
     }
+  } else {
+    lastMusicPlayerStopTime = 0;
   }
 }
